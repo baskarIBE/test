@@ -11,7 +11,7 @@ class OrderInsert
  
     public function Insertfun()
     {
-        $db = mysqli_connect('localhost','root','root123','crackers');
+        $db = mysqli_connect('database-1.cocjutaea22j.ap-south-1.rds.amazonaws.com','admin','1234saran','crackers');
         $total=0;
         foreach($_SESSION["cart"] as $keys=>$values)
         {

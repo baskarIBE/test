@@ -38,6 +38,9 @@ include ('server.php');
                     <a class="text-dark" href="javascript:void(0);">Help</a>
                     <span class="text-muted px-2">|</span>
                     <a class="text-dark" href="javascript:void(0);">Support</a>
+                    <span class="text-muted px-2">|</span>
+                    <a class="text-dark" href="javascript:void(0);">Test</a>
+
                 </div>
             </div>
             <div class="col-lg-6 text-center text-lg-right">

@@ -68,12 +68,12 @@ include ('server.php');
                 </a>
             </div>
             <div class="col-lg-6 col-6 text-left">
-                <form action="">
+                <form action="search.php" method="get">
                     <div class="input-group">
-                        <input type="text" class="search-box" placeholder="Search for products">
+                        <input type="text" name="keys" class="search-box" placeholder="Search for products">
                         <div class="input-group-append">
                             <span class="input-group-text bg-transparent text-primary">
-                                <i class="fa fa-search"></i>
+                                <i type="submit" name="submit" value="search" class="fa fa-search"></i>
                             </span>
                         </div>
                     </div>

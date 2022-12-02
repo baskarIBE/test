@@ -357,6 +357,8 @@ include ('order.php');
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <!-- search Javascript -->
+    <script src="js/common.js"></script>
 
 
 </script>

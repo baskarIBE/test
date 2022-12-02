@@ -745,6 +745,8 @@ include ('server.php');
     <script src="js/main.js"></script>
     <!-- Template Javascript -->
     <script src="js/app.js"></script>
+    <!-- search Javascript -->
+    <script src="js/common.js"></script>
 </body>
 
 </html>

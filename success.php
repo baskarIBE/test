@@ -66,13 +66,14 @@ include ('order.php');
                 </a>
             </div>
             <div class="col-lg-6 col-6 text-left">
-                <form action="">
+            <form action="search.php" method="get">
                     <div class="input-group">
-                        <input type="text" class="search-box" placeholder="Search for products">
+                        <input type="text" class="search-box" id="search" placeholder="Search for products" name="keys">
+                        <div id="display" class="ser-tex"></div>
                         <div class="input-group-append">
-                            <span class="input-group-text bg-transparent text-primary">
+                            <button class="input-group-text bg-transparent text-primary" type="submit">
                                 <i class="fa fa-search"></i>
-                            </span>
+                            </button>
                         </div>
                     </div>
                 </form>

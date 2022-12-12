@@ -123,7 +123,7 @@ if(isset($_POST['ad-login'])){
         header('location:admin.php');
     } 
     else{
-        echo "<script>window.location.href='ad-login.php';</script>";
+        echo "<script>window.location.href='admin.php';</script>";
     }
         
     }

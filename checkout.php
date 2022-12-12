@@ -141,7 +141,7 @@ include ('order.php');
                             <a href="contact.php" class="nav-item nav-link">Contact</a>
                         </div>
                         <div class="navbar-nav ml-auto py-0">
-                            <a href="user-history.php" class="nav-item nav-link">Order</a>
+                            <a href="user-history.php" class="nav-item nav-link" id="2" onClick="reply_click(this.id)">Order</a>
                             <a href="user.php" class="nav-item nav-link">Login</a>
                             <a href="register.php" class="nav-item nav-link">Register</a>
                             <a href="admin.php" class="nav-item nav-link"  onClick="reply_click(this.id)" id="1">Admin</a>
@@ -209,6 +209,8 @@ include ('order.php');
 							$total=0;
 							foreach($_SESSION["cart"] as $keys=>$values)
 							{
+                                $qtyf=$values["qtytot1"]-$values["qty"];
+                                if($qtyf>=0){
 								$amt=$values["qty"]*$values["price"];
 									$total+=$amt;
 									echo "
@@ -220,6 +222,19 @@ include ('order.php');
 												<td><a href='checkout.php?del={$values["crackers_id"]}'>Remove</a></td>
 											</tr>
 									";
+
+                                }
+                                else{
+                                    if($values["crackers_id"])
+                                    {
+                                    unset($_SESSION["cart"][$keys]);
+                                    }
+                                    echo"
+                                    <script>alert('Customer Qty = {$values["qty"]} product qty = {$values["qtytot1"]} Over All Total IS ={$qtyf} That Product qty is Exced of over total Qty  = {$values["qtytot1"]} So Remove the Qty and Try Again Correct Qty');</script>
+                                    <script>window.location.href='detail.php?id={$values["crackers_id"]}';</script>
+                                    ";
+                                    
+                                }
 									
 							}	
 								echo "

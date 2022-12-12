@@ -1,6 +1,7 @@
 <?php
 include ('config.php');
 include ('server.php');
+include ('order_btn.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -135,7 +136,7 @@ include ('server.php');
                             <a href="contact.php" class="nav-item nav-link">Contact</a>
                         </div>
                         <div class="navbar-nav ml-auto py-0">
-                            <a href="user-history.php" class="nav-item nav-link">Order</a>
+                            <a href="user-history.php" class="nav-item nav-link" id="2" onClick="reply_click(this.id)">Order</a>
                             <a href="user.php" class="nav-item nav-link">Login</a>
                             <a href="register.php" class="nav-item nav-link">Register</a>
                             <a href="admin.php" class="nav-item nav-link" onClick="reply_click(this.id)" id="1">Admin</a>
@@ -176,51 +177,146 @@ include ('server.php');
         <div class="tab-content">
             <div class="tab-pane fade show active" id="tab-pane-1">
 
+            <div class="container">
+            <div class="row">
             
             <!-- content start-->     
-            <div class="col-lg-12 table-responsive mb-5">
-            <table class="table table-bordered text-center mb-5">
-                    <thead class="bg-secondary text-dark">
-                        <tr>
-                            <th>List of Product Name</th>
-                            <th>List of Crackers qty</th>
-                            <th>List of Crackers Total</th>
-                            <th>List of Crackers Order Date</th>
-                            <th>List of Crackers email</th>
-                        </tr>
-                    </thead>
-                    <tbody class="align-middle">
                     <?php
+                     $orderemail=$_SESSION['email'];
                     
                 //    $sql="SELECT crackersuser.email,crackersuser.mobileno,creakersorder.order_name,creakersorder.order_qty,creakersorder.order_total,creakersorder.orderdate,creakersorder.cusemail from crackersuser inner join creakersorder on crackersuser.crackersuser_id=creakersorder.order_id";
-                $sql="SELECT crackersuser.email,crackersuser.mobileno,creakersorder.order_name,creakersorder.order_qty,creakersorder.order_total,creakersorder.orderdate,creakersorder.cusemail from crackersuser inner join creakersorder on crackersuser.crackersuser_id=creakersorder.order_id";
+                // $sql="SELECT crackersuser.email,crackersuser.mobileno,creakersorder.order_name,creakersorder.order_qty,creakersorder.order_total,creakersorder.orderdate,creakersorder.cusemail from crackersuser inner join creakersorder on crackersuser.crackersuser_id=creakersorder.order_id";
                 
                 // $sql="SELECT * FROM creakersorder where cusemail='{$_SESSION['email']}'";
+                // $sql="select order_id,product_order_id,order_img,order_name,order_qty,order_price,order_total,cusemail,orderdate,order_stus FROM creakersorder where order_stus='booked' order by order_id DESC";
+                // $sql="select order_id,product_order_id,order_img,order_name,order_qty,order_price,order_total,cusemail,orderdate,order_stus FROM crackers.creakersorder where order_stus='Booked' and cusemail='$orderemail' order by order_id DESC";
+                $sql="select creakersorder.order_id,creakersorder.product_order_id,creakersorder.order_img,creakersorder.order_name,creakersorder.order_qty,creakersorder.order_price,creakersorder.order_total,creakersorder.cusemail,creakersorder.orderdate,creakersorder.order_stus,creakersorder.order_stus_date,crackersuser.mobileno,crackersuser.address1,crackersuser.address2,crackersuser.country,crackersuser.city,crackersuser.state,crackersuser.firstname,crackersuser.lastname FROM crackers.crackersuser LEFT JOIN crackers.creakersorder on creakersorder.cusemail = crackersuser.email where order_stus='Booked' and cusemail='$orderemail' order by order_id DESC";
                    $res=$db->query($sql);
                    if($res->num_rows>0)
                    {
                        while($row=$res->fetch_assoc())
                        {
                            echo '
-                       <tr>
+                           
+                        
+                            <div class="d-inline-flex col-12 or-common bg-secondary">
+                                <p class="mr-4">Order placed <span class="d-block">'. $row['orderdate'] .'</span></p>
+                                <p class="mr-4">Total  <span class="d-block">'. $row['order_total'] .'</span></p>
+                                <div class="btn-group open">
+                                    <a class="btn" href="javascript:void(0);"><span class="d-block">Ship to</span>'. $row['firstname'] .' '. $row['lastname'] .'</a>
+                                    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                                        <span class="" title="Toggle dropdown menu"></span>
+                                    </a>
+                                    <div class="dropdown-menu addtop">
+                                        <p>'. $row['address1'] .' , '. $row['address2'] .'</p>
+                                        <p>'. $row['country'] .'</p>
+                                        <p>'. $row['city'] .'</p>
+                                        <p>'. $row['state'] .'</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="contpart col-12 pt-4 pb-4 mb-4">
+                                    <h4 class="font-weight-semi-bold text-uppercase mb-3">'. $row['order_stus'] .' '. $row['orderdate'] .'</h4>
+                                <div class="contpartcommon col-12 d-inline-flex">
+                                    <div class="contimg col-1"><img src="img/'. $row['order_img'] .'" alt="orderimages" style="width: 50px;"></div>
+                                    <div class="col-8">
+                                    <a href="javascript:void(0);">'. $row['order_name'] .'</a>
+                                    <p>Return window closed on 21-Oct-2022</p>
+                                    <a class="btn btn-primary" href="detail.php?id='. $row['product_order_id'] .'">Buy it again</a>
+                                    
+                                    <!-- modul content start-->
+                                    <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ex'. $row['product_order_id'] .'">
+                                        Cancel
+                                        </button>
+            
+                                        <!-- Modal -->
+                                        <form method="post" action="return.php">
+                                        <div class="modal fade" id="ex'. $row['product_order_id'] .'" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="ex'. $row['product_order_id'] .'">'. $row['order_name'] .'<span class="ortit ml-1 ortitretu">'. $row['order_qty'] .'</span></h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                   <!--content checkbox start-->
+                                                   <div class="form-check">
+                                                   <input class="form-check-input" type="radio" name="userdif" value="Not satisfaction" id="flexRadioDefault1">
+                                                   <label class="form-check-label" for="flexRadioDefault1">
+                                                     Not satisfaction
+                                                   </label>
+                                                 </div>
+                                                 <div class="form-check">
+                                                   <input class="form-check-input" type="radio" name="userdif" value="Damage" id="flexRadioDefault2" checked>
+                                                   <label class="form-check-label" for="flexRadioDefault2">
+                                                     Damage
+                                                   </label>
+                                                 </div>
+                                                 <div class="form-check">
+                                                   <input class="form-check-input" type="radio" name="userdif" value="product count low" id="flexRadioDefault2" checked>
+                                                   <label class="form-check-label" for="flexRadioDefault2">
+                                                   product count low
+                                                   </label>
+                                                 </div>
+                                                 <div class="form-check">
+                                                   <input class="form-check-input" type="radio" name="userdif" value="Dis match Item" id="flexRadioDefault2" checked>
+                                                   <label class="form-check-label" for="flexRadioDefault2">
+                                                   Dis match Item
+                                                   </label>
+                                                 </div>
+                                                    
+                                                   <!--content checkbox end-->
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="submit"  class="btn btn-primary" name="return_query">Save changes</button>
+                                                    <input type="hidden" name="poi" value="'. $row['product_order_id'] .'">
+                                                    <input type="hidden" name="coi" value="'. $row['order_id'] .'">
+                                                    <input type="hidden" name="cname" value="'. $row['order_name'] .'">
+
+                                                </div>
+                                            
+                                            </div>
+                                        </div>
+                                        </div>
+                                        </form>
+                                    <!-- modul content end-->
+
+                                    </div>
+                                    <div class="col-3 pb-2">
+                                    <a class="btn btn-primary orbtn mb-4" href="javascript:void(0);">Leave seller feedback</a>
+                                    <a class="btn btn-primary orbtn" href="javascript:void(0);">Write a product review</a>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            
+                       
+                            
+
+                       ';    
+                   }
+                }else{
+                    // echo"<script>window.location.href='user.php';</script>";
+                    echo"<p class='mr-4'>Cureently No Product Placed in User List</p>";
+
+                }
+                       ?>
+                       </div>
+                       </div>
+                       <!-- <tr>
                            <td>'. $row['order_name'] .'</td>
                            <td>'. $row['order_qty'] .'</td>
                            <td>'. $row['order_total'] .'</td>
                            <td>'. $row['orderdate'] .'</td>
                            <td>'. $row['cusemail'] .'</td>
-                       </tr>
+                       </tr> -->
 
-                       ';    
-                   }
-                }else{
-                    echo"<script>window.location.href='user.php';</script>";
-                }
-                       ?>
-
-                    </tbody>
-                </table> 
-                
-            </div>
+                    
             <!-- content end-->
             </div>
         <!--end-->
@@ -239,11 +335,15 @@ include ('server.php');
                             <th>List of Crackers Total</th>
                             <th>List of Crackers Order Date</th>
                             <th>List of Crackers email</th>
+                            <th>Crackers Buy</th>
                         </tr>
                     </thead>
                     <tbody class="align-middle">
+                    <!-- $sql="SELECT * FROM creakersorder where cusemail='{$_SESSION['email']}'"; -->
                     <?php
-                $sql="SELECT * FROM creakersorder where cusemail='{$_SESSION['email']}'";
+                    
+                 $sql="select order_id,product_order_id,order_name,order_qty,order_price,order_total,cusemail,orderdate,order_stus FROM crackers.creakersorder where order_stus='Cancel Request' and cusemail='$orderemail' order by order_id DESC";
+                
                    $res=$db->query($sql);
                    if($res->num_rows>0)
                    {
@@ -256,12 +356,13 @@ include ('server.php');
                            <td>'. $row['order_total'] .'</td>
                            <td>'. $row['orderdate'] .'</td>
                            <td>'. $row['cusemail'] .'</td>
+                           <td> <a class="btn btn-primary text-center bu-cart" href="detail.php?id='. $row['product_order_id'] .'">Buy It again</a></td>
                        </tr>
 
                        ';   
                    }
                 }else{
-                    echo"<script>window.location.href='user.php';</script>";
+                    echo"<p class='mr-4'>Cureently No Product Placed in User List</p>";
                 }
                        ?>
                     </tbody>
@@ -276,14 +377,60 @@ include ('server.php');
             <div class="tab-pane fade" id="tab-pane-3">
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        <p class="mb-4">Looking for an order? All of your orders have been dispatched.<a href="cart.php">View all orders</a></p>  
+                        <p>This page will be updated soon</p>
                     </div>
                 </div>
             </div>
             <div class="tab-pane fade" id="tab-pane-4">
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        <p class="mb-4">Looking for an order? All of your orders have been dispatched.<a href="cart.php">View all orders</a></p>
+                    <div class="col-lg-12 table-responsive mb-5">
+                    <table id="example" class="table table-bordered text-center mb-5">
+                    <thead class="bg-secondary text-dark">
+                        <tr>
+                            <th>List of Product Name</th>
+                            <th>List of Crackers qty</th>
+                            <th>List of Crackers Total</th>
+                            <th>List of Crackers Order Date</th>
+                            <th>List of Crackers email</th>
+                            <th>List of Crackers Cancel Date</th>
+                            <th>List of Crackers Cancel</th>
+                            <th>Crackers Buy</th>
+                        </tr>
+                    </thead>
+                    <tbody class="align-middle">
+                    <!-- $sql="SELECT * FROM creakersorder where cusemail='{$_SESSION['email']}'"; -->
+                    <?php
+                    
+                 $sql="select order_id,product_order_id,order_img,order_name,order_qty,order_price,order_total,cusemail,orderdate,order_stus,order_stus_date FROM crackers.creakersorder where order_stus='Cancel Request' and cusemail='$orderemail' order by order_id DESC";
+                
+                   $res=$db->query($sql);
+                   if($res->num_rows>0)
+                   {
+                       while($row=$res->fetch_assoc())
+                       {
+                           echo '
+                       <tr>
+                           <td>'. $row['order_name'] .'</td>
+                           <td>'. $row['order_qty'] .'</td>
+                           <td>'. $row['order_total'] .'</td>
+                           <td>'. $row['orderdate'] .'</td>
+                           <td>'. $row['cusemail'] .'</td>
+                           <td>'. $row['order_stus_date'] .'</td>
+                           <td>'. $row['order_stus'] .'</td>
+                           <td> <a class="btn btn-primary text-center bu-cart" href="detail.php?id='. $row['product_order_id'] .'">Buy It again</a></td>
+                       </tr>
+
+                       ';   
+                   }
+                }else{
+                    echo"<p class='mr-4'>Cureently No Product Placed in User List</p>";
+                }
+                       ?>
+                    </tbody>
+                </table> 
+                
+            </div>
                         
                     </div> 
                 </div>

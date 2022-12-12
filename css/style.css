@@ -9620,5 +9620,28 @@ canvas {position: fixed;top: 0;left: 0;width: 100%;height: 100%;z-index: -1;}
 .ser-tex ul li {list-style-type: none;color: #000;cursor: pointer;}
 .ser-tex ul li a:hover {color: #D19C97 !important;}
 /*search option end*/
+.cartdis a {
+  pointer-events: none;
+}
+
+/*user order page*/
+.addtop {font-size: 14px;padding-left: 5px;}
+.addtop p{margin-bottom: 0px;}
+.ortit{font-size: 14px;}
+.orbtn {
+  font-size: 14px;
+  border-radius: 30px;
+}
+
+.contpart {
+  border: 1px solid #ccc;
+}
+.ortitretu {
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 2px;
+  font-size: 10px;
+}
+/*user order page*/
 
 

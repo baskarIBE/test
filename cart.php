@@ -138,7 +138,7 @@ include ('server.php');
                             <a href="contact.php" class="nav-item nav-link">Contact</a>
                         </div>
                         <div class="navbar-nav ml-auto py-0">
-                            <a href="user-history.php" class="nav-item nav-link">Order</a>
+                            <a href="user-history.php" class="nav-item nav-link" id="2" onClick="reply_click(this.id)">Order</a>
                             <a href="user.php" class="nav-item nav-link">Login</a>
                             <a href="register.php" class="nav-item nav-link">Register</a>
                             <a href="admin.php" class="nav-item nav-link" onClick="reply_click(this.id)" id="1">Admin</a>
@@ -176,7 +176,7 @@ include ('server.php');
                    
                 <div class="table-responsive mb-5">
                 <form method="get" action="">
-                <table class="table table-bordered text-center mb-0">
+                <table class="table table-bordered text-center mb-0" id="some1">
                     <thead class="bg-secondary text-dark">
                         <tr>
                             <th>Photo</th>
@@ -184,6 +184,7 @@ include ('server.php');
                             <th>Content</th>
                             <th>Actual Price</th>
                             <th>Discount Price</th>
+                            <th>Total Qty</th>
                             <th>View Page</th>
                         </tr>
                     </thead>
@@ -207,7 +208,8 @@ include ('server.php');
                             <td>'. $row['cracker_item'] .'</td>
                             <td class="linethro">'. $row['cracker_ac_price'] .'</td>
                             <td>'. $row['cracker_dc_price'] .'</td>
-                            <td class="align-middle">
+                            <td id="fqty1">'. $row['crackers_total_qty'] .'</td>
+                            <td id="qttot" class="align-middle btndis">
                             <a class="btn btn-primary text-center bu-cart" href="detail.php?id='. $row['crackers_id'] .'">view</a>
                             </td>
                         </tr>

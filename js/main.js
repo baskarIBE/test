@@ -101,6 +101,85 @@
     });
 
     //common
+
+// var tbl = document.getElementById("some1");
+// var tbltdid= document.getElementById("qttot");
+//     if (tbl != null) {
+//       for (var i = 0; i < tbl.rows.length; i++) {
+//         for (var j = 0; j < tbl.rows[i].cells.length; j++)
+//           tbl.rows[i].cells[5].onclick = function () { getval(this); };
+//       }
+//     }
+//     function getval(cel) {
+//       alert(cel.innerHTML);
+//       cel.setAttribute('style', 'background-color:red');
+//     }
+
+var tbl = document.getElementById("some1");
+    if (tbl != null) {
+      for (var i = 0; i < tbl.rows.length; i++) {
+        for (var j = 0; j < tbl.rows[i].cells.length; j++)
+        //   tbl.rows[i].cells[5];
+        var cel=tbl.rows[i].cells[5];
+        var cel2=tbl.rows[i].cells[6];
+        var cel3=cel.innerHTML;
+        
+        // alert(cel3);
+        // console.log(cel.innerHTML);
+        //  console.log(tbltdid);
+        // console.log(cel3);
+        // console.log(cel2);
+        if(cel3==0)
+        {
+            
+            var cel2=tbl.rows[i].cells[6];
+            // alert(cel2);
+            cel2.style.display="none";
+
+
+            // document.getElementById('qttot').style.backgroundColor = red;
+        }else
+        {
+            cel2.style.display="block"; 
+        }
+       
+          
+
+      }
+    }
+
+
+    //qty add minus values
+    let qtyElements=document.querySelectorAll('.cart-quantity');
+    qtyElements.forEach((input)=>{
+        input.addEventListener('change',changeqty);
+    });
+    
+       //change quantity
+ function changeqty(){
+    if(isNaN(this.value) || this.value<1){
+        this.value=1;
+        loadcontent();
+    }
+ }
+
+
+
+    
+    
+    
+   
+   
+
+
+    
+    
+  
+
+// console.log(hidbtn);
+
+    
+    
    
        
     

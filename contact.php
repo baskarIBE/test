@@ -134,7 +134,7 @@ include ('server.php');
                             <a href="contact.php" class="nav-item nav-link">Contact</a>
                         </div>
                         <div class="navbar-nav ml-auto py-0">
-                            <a href="user-history.php" class="nav-item nav-link">Order</a>
+                            <a href="user-history.php" class="nav-item nav-link" id="2" onClick="reply_click(this.id)">Order</a>
                             <a href="user.php" class="nav-item nav-link">Login</a>
                             <a href="register.php" class="nav-item nav-link">Register</a>
                             <a id="1" href="admin.php" class="nav-item nav-link" onClick="reply_click(this.id)">Admin</a>

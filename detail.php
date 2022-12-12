@@ -140,7 +140,7 @@ include ('server.php');
                             <a href="contact.php" class="nav-item nav-link">Contact</a>
                         </div>
                         <div class="navbar-nav ml-auto py-0">
-                            <a href="user-history.php" class="nav-item nav-link">Order</a>
+                            <a href="user-history.php" class="nav-item nav-link" id="2" onClick="reply_click(this.id)">Order</a>
                             <a href="user.php" class="nav-item nav-link">Login</a>
                             <a href="register.php" class="nav-item nav-link">Register</a>
                             <a href="admin.php" class="nav-item nav-link" onClick="reply_click(this.id)" id="1">Admin</a>
@@ -169,7 +169,7 @@ include ('server.php');
     <!-- Shop Detail Start -->
     <div class="container-fluid py-5">
         <div class="row px-xl-5">
-        <div class="col-lg-8">
+        <div class="col-lg-12">
             
 
 <?php
@@ -186,8 +186,11 @@ if(isset($_POST["addcart"])){
                 'crackers_id' => $_GET["id"],
                 'pname' => $_POST["pname"],
                 'price' => $_POST["price"],
-                'qty' => $_POST["qty"]
+                'qty' => $_POST["qty"],
+                'qtytot1' => $_POST['qtytot'],
+                'pimg1' => $_POST['pimg']
             );
+
             
             $_SESSION["cart"][$index]=$item;
                 echo "<script>alert('Product Added..');</script>";
@@ -205,7 +208,9 @@ if(isset($_POST["addcart"])){
                 'crackers_id' => $_GET['id'],
                 'pname' => $_POST['pname'],
                 'price' => $_POST['price'],
-                'qty' => $_POST['qty']
+                'qty' => $_POST['qty'],
+                'qtytot1' => $_POST['qtytot'],
+                'pimg1' => $_POST['pimg']
             );
             $_SESSION["cart"][0]=$item;
             echo "<script>alert('Product Added..');</script>";
@@ -261,18 +266,20 @@ if(isset($_GET["id"]))
                         </div>
                         <small class='pt-1'>(50 Reviews)</small>
                     </div>
-                    <h3 class='font-weight-semi-bold mb-4'>Rs.{$row["cracker_dc_price"]}</h3>
+                    <h3 class='font-weight-semi-bold mb-4'>Rs.<span class='pro-total'>{$row["cracker_dc_price"]}</span> <span class='qty-tit'>Total Quantity {$row["crackers_total_qty"]}</span></h3>
                     <p class='mb-4'>Volup erat ipsum diam elitr rebum et dolor. Est nonumy elitr erat diam stet sit clita ea. Sanc invidunt ipsum et, labore clita lorem magna lorem ut. Erat lorem duo dolor no sea nonumy. Accus labore stet, est lorem sit diam sea et justo, amet at lorem et eirmod ipsum diam et rebum kasd rebum.</p>
                     
                     <div class='d-flex align-items-center mb-4 pt-2'>
                         <div class='input-group quantity mr-3' style='width: 130px;'>
 
-                            <input type='text' class='search-box bg-secondary text-center' name='qty' required>
+                            <input id='fqyt2' type='number' class='search-box bg-secondary text-center cart-quantity' value='1' name='qty' required>
                             <input type='hidden' class='search-box bg-secondary text-center' name='pname' value={$row["cracker_name"]}>
                             <input type='hidden' class='search-box bg-secondary text-center' name='price' value={$row["cracker_dc_price"]}>
+                            <input type='hidden' class='search-box bg-secondary text-center' name='qtytot' value={$row["crackers_total_qty"]}>
+                            <input type='hidden' class='search-box bg-secondary text-center' name='pimg' value={$row["cracker_img"]}>
                             
                         </div>
-                        <button name='addcart' class='btn btn-primary px-3'><i class='fa fa-shopping-cart mr-1'></i> Add To Cart</button>
+                        <button id='fqty' name='addcart' class='btn btn-primary px-3'><i class='fa fa-shopping-cart mr-1'></i> Add To Cart</button>
                     </div>
                     <div class='d-flex pt-2'>
                         <p class='text-dark font-weight-medium mb-0 mr-2'>Share on:</p>
@@ -295,38 +302,7 @@ if(isset($_GET["id"]))
             </form>
             </div>
         
-            <div class='col-lg-4'>
-                <form class='mb-5'>
-                    <div class='input-group'>
-                        <input type='text' class='search-box p-4' placeholder='Coupon Code'>
-                        <div class='input-group-append'>
-                            <button class='btn btn-primary'>Apply Coupon</button>
-                        </div>
-                    </div>
-                </form>
-            <div class='card border-secondary mb-5'>
-                <div class='card-header bg-secondary border-0'>
-                    <h4 class='font-weight-semi-bold m-0'>Cart Summary</h4>
-                </div>
-                <div class='card-body'>
-                    <div class='d-flex justify-content-between mb-3 pt-1'>
-                        <h6 class='font-weight-medium'>Subtotal</h6>
-                        <h6 class='font-weight-medium'>$150</h6>
-                    </div>
-                    <div class='d-flex justify-content-between'>
-                        <h6 class='font-weight-medium'>Shipping</h6>
-                        <h6 class='font-weight-medium'>$10</h6>
-                    </div>
-                </div>
-                <div class='card-footer border-secondary bg-transparent'>
-                    <div class='d-flex justify-content-between mt-2'>
-                        <h5 class='font-weight-bold'>Total</h5>
-                        <h5 class='font-weight-bold'>$160</h5>
-                    </div>
-                    <button id='chekid' name='addcart1' class='btn btn-block btn-primary my-3 py-3 idbut' onClick='reply_click(this.id)'>Proceed To Checkout</button>
-                </div>
-            </div>
-        </div>
+            
             
             
             ";
@@ -439,5 +415,5 @@ else
             </div>
         </div>
     </div>
-         
+  
     <?php include 'footer.php'; ?>

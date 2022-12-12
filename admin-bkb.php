@@ -167,20 +167,8 @@ include ('admin-but.php');
     <!-- Cart Start -->
     <div class="container-fluid pt-5">
         <div class="row px-xl-5">
-        <div class="col">
-            <div class="nav nav-tabs justify-content-center border-secondary mb-4">
-                <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">User Orders List</a>
-                <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-2">QTY Update</a>
-                <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">Cancelled Orders Request</a>
-                <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-4">Cancelled Orders </a>
-            </div>
-            <!--tab 1-->
-            <div class="tab-content">
-            <div class="tab-pane fade show active" id="tab-pane-1">
-                <div class="row">
-                    <div class="col-md-12 text-center">
-                    <div class="col-lg-12 table-responsive mb-5">
-                <table id="example" class="table table-bordered text-center mb-4" cellspacing="0" width="100%">
+            <div class="col-lg-12 table-responsive mb-5">
+            <table id="example" class="table table-bordered text-center mb-4" cellspacing="0" width="100%">
                     <thead class="bg-secondary text-dark">
                         <tr>
                             <th>List of Crackers</th>
@@ -278,23 +266,13 @@ include ('admin-but.php');
 
                     </tbody>
                 </table> 
-            </div>
-                    </div>
-                </div>
-            </div>
-            <!--tab 2 start-->
-            <div class="tab-pane fade" id="tab-pane-2">
-                <div class="row">
-                    <div class="col-md-12 text-center">
-                    <div class="col-lg-12 table-responsive mb-5">
-                        <!--update crackers qty start-->
-                <table class="table table-bordered text-center mb-5">
+                <!--update crackers qty start-->
+                <table class="table table-bordered text-center mb-0">
                     <thead class="bg-secondary text-dark">
                         <tr>
                             <th>List of Crackers ID</th>
                             <th>List of Crackers IMAGE</th>
                             <th>List of Crackers NAME</th>
-                            <th>List of Crackers QTY </th>
                             <th>List of Crackers QTY Changes</th>
                             <th>List of Crackers Update</th>
                         </tr>
@@ -316,7 +294,6 @@ include ('admin-but.php');
                             <td>'. $row['crackers_id'] .'</td>
                            <td class="align-middle"><img src="img/'. $row['cracker_img'] .'" alt="" style="width: 50px;"> </td>
                            <td>'. $row['cracker_name'] .'</td>
-                           <td>'. $row['crackers_total_qty'] .'</td>
                            <form method="post">
                            <td>
                            <input class="p-2 border" type="text" name="qtyupdate">
@@ -336,14 +313,15 @@ include ('admin-but.php');
 
                     );
                     $_SESSION["qtyup"][0]=$item2;
+                    // print_r($_SESSION["qtyup"][0]['qtyupdateid']);
+                    // print_r($_SESSION["qtyup"][0]['qtyupdate']);
+               }
                     $qtyupdateid=$_SESSION["qtyup"][0]['qtyupdateid'];
                        $qtyupdate=$_SESSION["qtyup"][0]['qtyupdate'];
-                    
+                    //    echo "$qtyupdateid";
+                    //    echo "$qtyupdate";
                        $sql="UPDATE crackerslist SET crackers_total_qty = $qtyupdate WHERE crackers_id=$qtyupdateid";
                        $res=$db->query($sql);
-                    
-               }
-                    
                
 
                        ?>
@@ -351,147 +329,9 @@ include ('admin-but.php');
                     </tbody>
                 </table> 
                 <!--update crackers qty End--> 
-
-                    </div>    
-                    </div>
-                </div>
             </div>
-            <!--tab 2 end-->
-            <!--tab 4 start-->
-            <div class="tab-pane fade" id="tab-pane-3">
-                <div class="row">
-                    <div class="col-md-12 text-center">
-                        <!--content part start-->
-                        <div class="col-lg-12 table-responsive mb-5">
-                    <table id="example" class="table table-bordered text-center mb-5">
-                    <thead class="bg-secondary text-dark">
-                        <tr>
-                            <th>List of Product Name</th>
-                            <th>List of Crackers qty</th>
-                            <th>List of Crackers Total</th>
-                            <th>List of Crackers Order Date</th>
-                            <th>List of Crackers email</th>
-                            <th>List of Crackers Cancel Date</th>
-                            <th>List of Crackers Cancel</th>
-                            <th>Crackers Cancel Submition</th>
-                        </tr>
-                    </thead>
-                    <tbody class="align-middle">
-                    <!-- $sql="SELECT * FROM creakersorder where cusemail='{$_SESSION['email']}'"; -->
-                    <?php
-                    
-                 $sql="select order_id,product_order_id,order_name,order_qty,order_price,order_total,cusemail,orderdate,order_stus,order_stus_date,ad_cancel_or_staus,ad_cancel_or_staus_up_date FROM crackers.creakersorder where order_stus='Cancel Request' order by order_id DESC";
-                
-                   $res=$db->query($sql);
-                   if($res->num_rows>0)
-                   {
-                       while($row=$res->fetch_assoc())
-                       {
-                           echo '
-                       <tr>
-                           <td>'. $row['order_name'] .'</td>
-                           <td>'. $row['order_qty'] .'</td>
-                           <td>'. $row['order_total'] .'</td>
-                           <td>'. $row['orderdate'] .'</td>
-                           <td>'. $row['cusemail'] .'</td>
-                           <td>'. $row['order_stus_date'] .'</td>
-                           <td>'. $row['order_stus'] .'</td>
-                           
-                           <td>
-                           <form method="post" action="admin_order_cancel_btn.php">
-                           <input class="btn btn-primary text-center bu-cart" type="submit" name="ad-cancelorder" value="Cancel order Status">
-                            <input type="hidden" name="ad_coi" value="'. $row['order_id'] .'">
-                           </form>
-                           </td>
-                           
-                       </tr>
-
-                       ';   
-                   }
-                }
-                       ?>
-                    </tbody>
-                </table> 
-                
-            </div>
-            <!--content part end-->
-                        
-                    </div>
-                </div>
-            </div>
-            <!--tab 4 end-->
-            <!--tab 5 start-->
-            <div class="tab-pane fade" id="tab-pane-4">
-                <div class="row">
-                    <div class="col-md-12 text-center">
-                        <!--content part start-->
-                        <div class="col-lg-12 table-responsive mb-5">
-                    <table id="example" class="table table-bordered text-center mb-5">
-                    <thead class="bg-secondary text-dark">
-                        <tr>
-                            <th>List of Product Name</th>
-                            <th>List of Crackers qty</th>
-                            <th>List of Crackers Total</th>
-                            <th>List of Crackers Order Date</th>
-                            <th>List of Crackers email</th>
-                            <th>List of Crackers Cancel Date</th>
-                            <th>List of Crackers Cancel</th>
-                            <th>Admin Crackers Cancel Submition Status</th>
-                            <th>Admin Crackers Cancel Submition Date</th>
-                        </tr>
-                    </thead>
-                    <tbody class="align-middle">
-                    <!-- $sql="SELECT * FROM creakersorder where cusemail='{$_SESSION['email']}'"; -->
-                    <?php
-                    
-                 $sql="select order_id,product_order_id,order_name,order_qty,order_price,order_total,cusemail,orderdate,order_stus,order_stus_date,ad_cancel_or_staus,ad_cancel_or_staus_up_date FROM crackers.creakersorder where order_stus='Cancel' order by order_id DESC";
-                
-                   $res=$db->query($sql);
-                   if($res->num_rows>0)
-                   {
-                       while($row=$res->fetch_assoc())
-                       {
-                           echo '
-                       <tr>
-                           <td>'. $row['order_name'] .'</td>
-                           <td>'. $row['order_qty'] .'</td>
-                           <td>'. $row['order_total'] .'</td>
-                           <td>'. $row['orderdate'] .'</td>
-                           <td>'. $row['cusemail'] .'</td>
-                           <td>'. $row['order_stus_date'] .'</td>
-                           <td>'. $row['order_stus'] .'</td>
-                           <td>'. $row['ad_cancel_or_staus'] .'</td>
-                           <td>'. $row['ad_cancel_or_staus_up_date'] .'</td>
-                           
-                           
-                       </tr>
-
-                       ';   
-                   }
-                }
-                       ?>
-                    </tbody>
-                </table> 
-                
-            </div>
-            <!--content part end-->
-                        
-                    </div>
-                </div>
-            </div>
-            <!--tab 5 end-->
-
-            </div>
-        </div>
-
-
-
-
-
-
-
             
-               
+            
         </div>
     </div>
     <!-- Cart End -->

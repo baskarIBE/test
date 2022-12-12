@@ -8,7 +8,7 @@ session_start();
     //Search box value assigning to $Name variable.
        $Name = $_POST['search'];
     //Search query.
-    $sql = "SELECT search_name FROM search WHERE search_name LIKE '%$Name%' LIMIT 5";
+    $sql = "SELECT search_name,search_id FROM search WHERE search_name LIKE '%$Name%' LIMIT 5";
     //Query execution
     $res=$db->query($sql);
     //Creating unordered list to display result.
@@ -22,7 +22,7 @@ session_start();
             Calling javascript function named as "fill" found in "script.js" file.
             By passing fetched result as parameter. -->
        <li onclick='fill("<?php echo $row['search_name']; ?>")'>
-       <a>
+       <a href="detail.php?id=<?php echo $row['search_id']; ?>">
        <!-- Assigning searched result in "Search box" in "search.php" file. -->
            <?php echo $row['search_name']; ?>
        </li></a>
